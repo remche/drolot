@@ -1,12 +1,21 @@
 pragma solidity ^0.4.4;
 
 contract Drolot {
-	address[] players;
 	address public owner;
-	uint amount = 1;
+	address[10] public players;
+	uint public num_players = 0;
+	uint lot = 990 finney;
 
 	function Drolot() {
 		owner = msg.sender;
+	}
+
+	function insert(address player) internal {
+		players[num_players++] = player;
+	}
+
+	function clear() internal {
+		num_players = 0;
 	}
 
 	function dro() internal returns (address winner){
@@ -15,10 +24,12 @@ contract Drolot {
 	}	
 
 	function () payable{
-		players.push(msg.sender);
-		if (players.length == 10){
+		require(msg.value == 100 finney);
+		insert(msg.sender);
+		if (num_players == 10){
 			address winner = dro();
-			winner.transfer(amount);
+			winner.transfer(lot);
+			clear();
 		}
 	}
 }

@@ -1,0 +1,22 @@
+(truffle)
+compile/deploy
+Drolot.new().then(function(res) { sc = Drolot.at(res.address) })
+(truffle)
+
+var json = require('./build/contracts/Drolot.json');
+var abi = json['abi'];
+
+var mc = web3.eth.contract(abi);
+var c = mc.at(sc.address);
+
+c.players();
+
+from = web3.eth.accounts[0];
+to = sc.address;
+var amount = web3.toWei(1, "ether");
+
+web3.eth.sendTransaction({from:from, to:to, value: amount});
+web3.eth.getBalance(web3.eth.accounts[0]);
+web3.eth.getBalance(sc.address)
+web3.fromWei(web3.eth.getBalance(sc.address), 'ether');
+
