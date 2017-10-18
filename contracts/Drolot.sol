@@ -6,6 +6,14 @@ contract Drolot {
 	uint public num_players = 0;
 	uint lot = 990 finney;
 
+	event NewPlayer(
+		address indexed _from
+	);
+
+	event Winner(
+		address indexed _winner
+	);
+
 	function Drolot() {
 		owner = msg.sender;
 	}
@@ -26,9 +34,11 @@ contract Drolot {
 	function () payable{
 		require(msg.value == 100 finney);
 		insert(msg.sender);
+		NewPlayer(msg.sender);
 		if (num_players == 10){
 			address winner = dro();
 			winner.transfer(lot);
+			Winner(winner);
 			clear();
 		}
 	}

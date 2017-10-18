@@ -1,4 +1,13 @@
+var DefaultBuilder = require("truffle-default-builder");
+
 module.exports = {
+	build: new DefaultBuilder({
+		"index.html": "index.html",
+		"app.js": [
+			"javascripts/index.js",
+		],
+		"images/": "images/"
+	}),
   networks: {
     development: {
       host: "localhost",
